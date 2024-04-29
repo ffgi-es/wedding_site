@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    /*background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0637 70%);*/
 }
 
 main {
@@ -70,7 +71,7 @@ main {
         width: 0;
     }
 
-    .top-row, article {
+    .top-row {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
