@@ -1,0 +1,11 @@
+#itinerary {
+    background: url(https://i.imgur.com/QK3QGKF.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%
+}
+
+ul.agenda {
+    list-style-type: none;
+    text-align: left;
+}
