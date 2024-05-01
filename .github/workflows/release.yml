@@ -47,6 +47,9 @@ jobs:
     name: Terraform Plan
     needs: get-image-tag
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
     env:
       ARM_SKIP_PROVIDER_REGISTRATION: true
     outputs:
