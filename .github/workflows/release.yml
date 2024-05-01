@@ -70,9 +70,9 @@ jobs:
       - name: Terraform Plan
         id: tf-plan
         env:
-          TF_VAR_IMAGE_TAG: ${{ needs.get-image-tag.outputs.image-tag }}
-          TF_VAR_DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME}}
-          TF_VAR_DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN}}
+          TF_VAR_image_tag: ${{ needs.get-image-tag.outputs.image-tag }}
+          TF_VAR_docker_username: ${{ secrets.DOCKERHUB_USERNAME}}
+          TF_VAR_docker_token: ${{ secrets.DOCKERHUB_TOKEN}}
         run: |
           export exitcode=0
           terraform plan -detailed-exitcode -no-color -out tfplan || export exitcode=$?
