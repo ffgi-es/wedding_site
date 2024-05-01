@@ -3,8 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - "main"
-      - "test-build"
+      - "*"
 
 jobs:
   build:
@@ -28,4 +27,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding_site:test
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wedding_site:${{ github.ref_name }}
