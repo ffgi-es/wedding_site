@@ -8,7 +8,7 @@ resource "azurerm_service_plan" "wedding_site" {
   resource_group_name = azurerm_resource_group.wedding_site.name
   location            = azurerm_resource_group.wedding_site.location
   os_type             = "Linux"
-  sku_name            = "F1"
+  sku_name            = "B1"
 }
 
 resource "azurerm_linux_web_app" "wedding_site" {
