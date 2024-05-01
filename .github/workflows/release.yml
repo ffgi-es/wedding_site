@@ -6,7 +6,11 @@ on:
     branches:
       - 'main'
   workflow_dispatch:
-    inputs: {}
+    inputs:
+      image_tag:
+        required: false
+        default: none
+        type: string
 
 env:
   ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
@@ -22,11 +26,18 @@ jobs:
       image-tag: ${{ steps.output.outputs.IMAGE_TAG }}
     steps:
       - name: Download Image Tag
+        if: ${{ inputs.image_tag == 'none'}}
         uses: actions/download-artifact@v4
         with:
           name: image-tag
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Set Image Tag
+        if: ${{ inputs.image_tag != 'none'}}
+        run: echo "IMAGE_TAG=$TAG" > image-tag.txt
+        env:
+          TAG: ${{ inputs.image_tag }}
 
       - name: Output Image Tag
         id: output
