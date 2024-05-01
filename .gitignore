@@ -20,6 +20,9 @@
 .mono/
 mono_crash.*
 
+# Terraform
+**/.terraform
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
