@@ -45,6 +45,11 @@ jobs:
         id: output
         run: cat image-tag.txt >> "$GITHUB_OUTPUT"
 
+      - name: Add Job Summary
+        env:
+          FOUND_TAG: ${{ steps.output.outputs.IMAGE_TAG }}
+        run: 'echo "Deploying tag: $FOUND_TAG" >> $GITHUB_STEP_SUMMARY'
+
   terraform-plan:
     name: Terraform Plan
     needs: get-image-tag
