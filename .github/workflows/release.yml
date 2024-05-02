@@ -3,6 +3,8 @@ name: cd
 on:
   workflow_run:
     workflows: ["ci"]
+    types:
+      - completed
     branches:
       - 'main'
   workflow_dispatch:
@@ -26,7 +28,7 @@ jobs:
       image-tag: ${{ steps.output.outputs.IMAGE_TAG }}
     steps:
       - name: Download Image Tag
-        if: ${{ inputs.image_tag == 'none'}}
+        if: ${{ github.event_name == 'workflow_run' }}
         uses: actions/download-artifact@v4
         with:
           name: image-tag
@@ -34,7 +36,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: Set Image Tag
-        if: ${{ inputs.image_tag != 'none'}}
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "IMAGE_TAG=$TAG" > image-tag.txt
         env:
           TAG: ${{ inputs.image_tag }}
