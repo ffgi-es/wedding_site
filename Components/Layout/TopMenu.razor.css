@@ -1,0 +1,33 @@
+.top-menu {
+    width: 80%;
+    height: 100%;
+    color: white;
+}
+
+.top-menu ::deep a {
+    color: white;
+}
+
+.top-menu-item {
+    float: left;
+    width: 25%;
+    height: 100%;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+}
+
+.top-menu-item ::deep a {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.top-menu-item ::deep a.active {
+    background-color: rgba(255,255,255,0.2);
+}
