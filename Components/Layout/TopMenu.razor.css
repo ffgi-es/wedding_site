@@ -1,6 +1,23 @@
+.top-menu-toggler {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: white;
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+}
+
+.top-menu-toggler:checked {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .top-menu {
-    width: 80%;
-    height: 100%;
+    min-width:30%;    
+    display: none;
     color: white;
 }
 
@@ -9,9 +26,7 @@
 }
 
 .top-menu-item {
-    float: left;
-    width: 25%;
-    height: 100%;
+    padding: 0.5rem;
     text-align: center;
 
     display: flex;
@@ -47,7 +62,8 @@
 .dropdown {
     display: none;
     position: absolute;
-    top: 100%;
+    top: 0%;
+    left: 100%;
     min-width: 100%;
 
     background-color: rgba(10,10,10,0.7);
@@ -63,4 +79,35 @@
 
 .top-menu-item:hover .dropdown {
     display: block;
+}
+
+.top-menu-toggler:checked ~ .top-menu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    background-color: rgba(10,10,10,0.7);
+}
+
+@media (min-width: 641px) {
+    .top-menu-toggler {
+        display: none;
+    }
+
+    .top-menu {
+        display: block;
+        width: 80%;
+        height: 100%;
+    }
+
+    .top-menu-item {
+        padding: 0;
+        float: left;
+        width: 25%;
+        height: 100%;
+    }
+
+    .dropdown {
+        top: 100%;
+        left: 0%;
+    }
 }
