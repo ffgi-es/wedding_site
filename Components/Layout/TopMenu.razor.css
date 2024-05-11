@@ -17,6 +17,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: relative;
 }
 
 .top-menu-item ::deep a {
@@ -36,4 +38,17 @@
 
 .top-menu-item ::deep a:hover {
     background-color: rgba(255,255,255,0.2);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+
+    background-color: rgba(10,10,10,0.7);
+}
+
+.top-menu-item:hover .dropdown {
+    display: block;
 }
