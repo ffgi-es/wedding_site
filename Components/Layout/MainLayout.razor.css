@@ -17,6 +17,10 @@ main {
     margin-right:15%;
     display: flex;
     align-items: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .top-row:hover {
@@ -36,19 +40,6 @@ main {
 @media (min-width: 641px) {
     .page {
         flex-direction: row;
-    }
-
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
-
-    .top-row {
-        position: sticky;
-        top: 0;
-        z-index: 1;
     }
 
     .top-row.auth ::deep a:first-child {
