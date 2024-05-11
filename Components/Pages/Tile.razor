@@ -1,0 +1,18 @@
+<div id="@TileId" class="tile" style="background-image:url(@BackgroundUrl)">
+    <div class="info">
+        <div class="info-content">
+            @TileContent
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required string TileId { get; set; }
+
+    [Parameter]
+    public required string BackgroundUrl { get; set; }
+
+    [Parameter]
+    public required RenderFragment TileContent { get; set; }
+}
