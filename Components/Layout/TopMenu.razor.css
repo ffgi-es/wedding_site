@@ -29,7 +29,7 @@
 }
 
 .top-menu {
-    min-width:30%;    
+    min-width:12rem;
     display: none;
     color: white;
 }
