@@ -11,6 +11,19 @@
     background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
 }
 
+.dropdown-toggler {
+    appearance: none;
+    cursor: pointer;
+    width: 1rem;
+    height: calc(100% - 8px);
+    border-radius: 0 4px 4px 0;
+    color: white;
+    top: 0.5rem;
+    left: 1rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-chevron-expand' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708'/%3E%3C/svg%3E") no-repeat center;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
 .top-menu-toggler:checked {
     background-color: rgba(255, 255, 255, 0.5);
 }
@@ -26,6 +39,7 @@
 }
 
 .top-menu-item {
+    height: 3rem;
     padding: 0.5rem;
     text-align: center;
 
@@ -39,9 +53,9 @@
 .top-menu-item ::deep a {
     text-decoration: none;
     padding: 0;
-    width: calc(100% - 8px);
+    width: calc(100% - 8px - 1rem);
     height: calc(100% - 8px);
-    border-radius: 4px;
+    border-radius: 4px 0 0 4px;
     display: flex;
     align-items: center;
     text-align: center;
@@ -55,7 +69,15 @@
     background-color: rgba(255,255,255,0.3);
 }
 
+.top-menu-item ::deep a.active ~ .dropdown-toggler {
+    background-color: rgba(255,255,255,0.3);
+}
+
 .top-menu-item ::deep a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.top-menu-item ::deep a:hover ~ .dropdown-toggler {
     background-color: rgba(255,255,255,0.2);
 }
 
@@ -77,7 +99,11 @@
     justify-content: left;
 }
 
-.top-menu-item:hover .dropdown {
+/*.top-menu-item:hover .dropdown {
+    display: block;
+}*/
+
+.dropdown-toggler:checked ~ .dropdown {
     display: block;
 }
 
