@@ -14,10 +14,15 @@ internal class RsvpRepo : IRsvpRepo
 
     public async Task<Rsvp?> GetRsvp(string id)
     {
-        var resp = await _containter.ReadItemAsync<Rsvp>(id, new PartitionKey(id));
+        try
+        {
+            var resp = await _containter.ReadItemAsync<Rsvp>(id, new PartitionKey(id));
 
-        return resp.StatusCode == System.Net.HttpStatusCode.OK
-            ? resp.Resource
-            : default;
+            return resp.Resource;
+        }
+        catch(CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            return default;
+        }
     }
 }
