@@ -1,10 +1,21 @@
+using Azure.Identity;
+using Microsoft.Azure.Cosmos;
 using wedding_site.Components;
+using wedding_site.Data;
+using wedding_site.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<IRsvpRepo,RsvpRepo>();
+builder.Services.AddSingleton(provider => {
+    return new CosmosClient(
+        Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"),
+        new DefaultAzureCredential());
+});
 
 var app = builder.Build();
 

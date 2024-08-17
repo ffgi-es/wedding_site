@@ -1,0 +1,28 @@
+@using wedding_site.Domain
+
+@page "/RSVP/{id}"
+@inject IRsvpRepo rsvpRepo
+
+<PageTitle>E&A - RSVP</PageTitle>
+
+<RsvpSection />
+
+@if (rsvp != null)
+{
+    <p> found your rsvp </p>
+}
+else
+{
+    <p> can't find your rsvp </p>
+}
+
+@code{
+    [Parameter]
+    public string Id {get; set;}
+
+    private Domain.Rsvp? rsvp;
+
+    protected override async Task OnInitializedAsync() {
+        rsvp = await rsvpRepo.GetRsvp(Id);
+    }
+}
