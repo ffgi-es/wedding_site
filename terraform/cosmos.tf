@@ -16,13 +16,13 @@ resource "azurerm_cosmosdb_account" "wedding_cosmos_account" {
   }
 
   geo_location {
-    location          = azurerm_resource_group.location
+    location          = azurerm_resource_group.wedding_site.location
     failover_priority = 0
   }
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.example.id]
+    identity_ids = [azurerm_user_assigned_identity.wedding_identity.id]
   }
 }
 
@@ -32,7 +32,7 @@ resource "azurerm_cosmosdb_sql_database" "wedding_db" {
   account_name        = azurerm_cosmosdb_account.wedding_cosmos_account.name
 }
 
-resource "azurerm_cosmosdb_sql_container" "example" {
+resource "azurerm_cosmosdb_sql_container" "rsvp_container" {
   name                  = "rsvp"
   resource_group_name   = azurerm_cosmosdb_sql_database.wedding_db.resource_group_name
   account_name          = azurerm_cosmosdb_sql_database.wedding_db.name
