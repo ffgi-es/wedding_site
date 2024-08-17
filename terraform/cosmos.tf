@@ -37,23 +37,11 @@ resource "azurerm_cosmosdb_sql_container" "rsvp_container" {
   resource_group_name = azurerm_cosmosdb_account.wedding_cosmos_account.resource_group_name
   account_name        = azurerm_cosmosdb_account.wedding_cosmos_account.name
   database_name         = azurerm_cosmosdb_sql_database.wedding_db.name
-  partition_key_paths   = ["/id"]
+  partition_key_paths   = ["/partition"]
   partition_key_version = 1
   throughput            = 400
 
-  indexing_policy {
-    indexing_mode = "consistent"
-
-    included_path {
-      path = "/id"
-    }
-
-    excluded_path {
-      path = "/*"
-    }
-  }
-
   unique_key {
-    paths = ["/definition/idlong", "/definition/idshort"]
+    paths = ["/confirmationCode"]
   }
 }
