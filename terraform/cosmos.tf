@@ -34,8 +34,8 @@ resource "azurerm_cosmosdb_sql_database" "wedding_db" {
 
 resource "azurerm_cosmosdb_sql_container" "rsvp_container" {
   name                  = "rsvp"
-  resource_group_name   = azurerm_cosmosdb_sql_database.wedding_db.resource_group_name
-  account_name          = azurerm_cosmosdb_sql_database.wedding_db.name
+  resource_group_name = azurerm_cosmosdb_account.wedding_cosmos_account.resource_group_name
+  account_name        = azurerm_cosmosdb_account.wedding_cosmos_account.name
   database_name         = azurerm_cosmosdb_sql_database.wedding_db.name
   partition_key_paths   = ["/id"]
   partition_key_version = 1
