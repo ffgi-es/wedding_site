@@ -13,9 +13,12 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton<IRsvpRepo,RsvpRepo>();
 builder.Services.AddSingleton(provider => {
     return new CosmosClient(
-        Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"),
-        new DefaultAzureCredential());
+        Environment.GetEnvironmentVariable("COSMOS_CONNECTIONSTRING"));
+        //Environment.GetEnvironmentVariable("COSMOS_ENDPOINT"),
+        //new DefaultAzureCredential());
 });
+
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 

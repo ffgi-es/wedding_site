@@ -1,0 +1,22 @@
+@rendermode InteractiveServer
+
+<div>
+    <input @bind="UserConfirmation" />
+    <button @onclick="CheckConfirmation">Submit</button>
+</div>
+<p>@CheckMessage</p>
+
+@code{
+    [Parameter]
+    public string Confirmation { get; set; }
+
+    public string UserConfirmation { get; set; }
+
+    public string CheckMessage { get; set; }
+
+    private void CheckConfirmation() {
+        CheckMessage = UserConfirmation == Confirmation
+            ? "RSVP confirmed"
+            : "Code does not match";
+    }
+}

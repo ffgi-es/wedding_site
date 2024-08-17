@@ -1,7 +1,36 @@
+@using wedding_site.Domain
+
+@inject IRsvpRepo rsvpRepo
+@inject ILogger<RsvpSection> logger
+
 <Tile TileId="rsvp">
     <TileContent>
         <h1>RSVP</h1>
 
         <p>details to come soon</p>
+        @if (rsvp != null)
+        {
+            <RsvpConfirmation Confirmation="@rsvp.ConfirmationCode" />
+        }
+        else
+        {
+            <p> can't find your rsvp </p>
+        }
     </TileContent>
 </Tile>
+
+@code
+{
+    [Parameter]
+    public string Id {get; set;}
+
+    private Domain.Rsvp? rsvp;
+
+    protected override async Task OnInitializedAsync()
+    {
+        logger.LogInformation($"input id: {Id}");
+
+        if (Id != null) 
+            rsvp = await rsvpRepo.GetRsvp(Id);
+    }
+}
