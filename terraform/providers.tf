@@ -4,8 +4,8 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name  = "cloud-shell-storage-westeurope"
-    storage_account_name = "csb100320037a918692"
+    resource_group_name  = "terraform"
+    storage_account_name = "tfstate29597"
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
     use_oidc             = true                                    # Can also be set via `ARM_USE_OIDC` environment variable.
