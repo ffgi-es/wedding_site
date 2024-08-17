@@ -12,7 +12,7 @@ resource "azurerm_service_plan" "wedding_site" {
 }
 
 resource "azurerm_linux_web_app" "wedding_site" {
-  name                = "wedding-site-app"
+  name                = "emilie-alastair-wedding"
   resource_group_name = azurerm_resource_group.wedding_site.name
   location            = azurerm_resource_group.wedding_site.location
   service_plan_id     = azurerm_service_plan.wedding_site.id
