@@ -17,6 +17,15 @@ resource "azurerm_linux_web_app" "wedding_site" {
   location            = azurerm_resource_group.wedding_site.location
   service_plan_id     = azurerm_service_plan.wedding_site.id
 
+  app_settings {
+    COSMOS_ENDPOINT = azurerm_cosmosdb_account.wedding_cosmos_account.endpoint
+  }
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.wedding_identity.id]
+  }
+
   site_config {
     always_on = false
     application_stack {
