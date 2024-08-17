@@ -17,8 +17,8 @@ resource "azurerm_linux_web_app" "wedding_site" {
   location            = azurerm_resource_group.wedding_site.location
   service_plan_id     = azurerm_service_plan.wedding_site.id
 
-  app_settings {
-    COSMOS_CONNECTIONSTRING = "AccountEndpoint=${azurerm_cosmosdb_account.wedding_cosmos_account.endpoint};AccountKey=${azurerm_cosmosdb_account.wedding_cosmos_account.primary_key}
+  app_settings = {
+    COSMOS_CONNECTIONSTRING = "AccountEndpoint=${azurerm_cosmosdb_account.wedding_cosmos_account.endpoint};AccountKey=${azurerm_cosmosdb_account.wedding_cosmos_account.primary_key}"
   }
 
   identity {
