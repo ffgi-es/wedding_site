@@ -1,11 +1,18 @@
+@using wedding_site.Domain
+
 @rendermode InteractiveServer
+
+@inject IRsvpRepo RsvpRepo
 
 @if (CheckPassed) {
     <div>
         <label>Name: </label>
-        <input /><br>
-        <label>Something: </label>
-        <input />
+        <input @bind="Rsvp.Name"/><br>
+        <label>Attending: </label>
+        <input type="checkbox" @bind="Rsvp.Attending"/><br>
+        <label>Food Alergies: </label>
+        <input @bind="Rsvp.FoodAlergies" /><br>
+        <button @onclick="SaveRsvp">Save</button>
     </div>
 }
 else {
@@ -14,8 +21,9 @@ else {
         <input @bind="UserConfirmation" />
         <button @onclick="CheckConfirmation">Submit</button>
     </div>
-    <p>@CheckMessage</p>
 }
+
+<p>@Message</p>
 
 @code{
     [Parameter]
@@ -25,12 +33,18 @@ else {
 
     public bool CheckPassed { get; set; } = false;
 
-    public string CheckMessage { get; set; } = "";
+    public string Message { get; set; } = "";
 
     private void CheckConfirmation() {
         CheckPassed = UserConfirmation == Rsvp.ConfirmationCode;
-        CheckMessage = CheckPassed
-            ? "RSVP confirmed"
+        Message = CheckPassed
+            ? ""
             : "Code does not match";
+    }
+
+    private async Task SaveRsvp() {
+        await RsvpRepo.SaveRsvp(Rsvp);
+
+        Message = "Your RSVP has been saved";
     }
 }
