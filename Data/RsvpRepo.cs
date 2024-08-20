@@ -25,4 +25,9 @@ internal class RsvpRepo : IRsvpRepo
             return default;
         }
     }
+
+    public async Task SaveRsvp(Rsvp rsvp)
+    {
+        await _containter.UpsertItemAsync(rsvp.ToDataModel(), new PartitionKey(rsvp.Id));
+    }
 }

@@ -18,6 +18,7 @@
             <label>RSVP: </label>
             <input @bind="Id" />
             <button @onclick="UpdateRsvp">Submit</button>
+            <p>@Message</p>
         }
     </TileContent>
 </Tile>
@@ -28,6 +29,8 @@
     public string Id {get; set;}
 
     private Domain.Rsvp? rsvp;
+
+    private string Message = "";
 
     protected override async Task OnInitializedAsync()
     {
