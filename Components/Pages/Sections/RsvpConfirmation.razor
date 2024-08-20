@@ -1,10 +1,21 @@
 @rendermode InteractiveServer
 
-<div>
-    <input @bind="UserConfirmation" />
-    <button @onclick="CheckConfirmation">Submit</button>
-</div>
-<p>@CheckMessage</p>
+@if (CheckPassed) {
+    <div>
+        <label>Name: </label>
+        <input /><br>
+        <label>Something: </label>
+        <input />
+    </div>
+}
+else {
+    <div>
+        <label>Passcode: </label>
+        <input @bind="UserConfirmation" />
+        <button @onclick="CheckConfirmation">Submit</button>
+    </div>
+    <p>@CheckMessage</p>
+}
 
 @code{
     [Parameter]
@@ -12,10 +23,13 @@
 
     public string UserConfirmation { get; set; }
 
-    public string CheckMessage { get; set; }
+    public bool CheckPassed { get; set; } = false;
+
+    public string CheckMessage { get; set; } = "";
 
     private void CheckConfirmation() {
-        CheckMessage = UserConfirmation == Confirmation
+        CheckPassed = UserConfirmation == Confirmation;
+        CheckMessage = CheckPassed
             ? "RSVP confirmed"
             : "Code does not match";
     }

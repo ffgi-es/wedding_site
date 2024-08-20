@@ -2,6 +2,7 @@
 
 @inject IRsvpRepo rsvpRepo
 @inject ILogger<RsvpSection> logger
+@rendermode InteractiveServer
 
 <Tile TileId="rsvp">
     <TileContent>
@@ -14,7 +15,9 @@
         }
         else
         {
-            <p> can't find your rsvp </p>
+            <label>RSVP: </label>
+            <input @bind="Id" />
+            <button @onclick="UpdateRsvp">Submit</button>
         }
     </TileContent>
 </Tile>
@@ -28,9 +31,14 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await UpdateRsvp();
+    }
+
+    private async Task UpdateRsvp()
+    {
         logger.LogInformation($"input id: {Id}");
 
-        if (Id != null) 
+        if (Id != null)
             rsvp = await rsvpRepo.GetRsvp(Id);
     }
 }
