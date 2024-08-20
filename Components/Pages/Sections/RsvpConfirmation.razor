@@ -19,7 +19,7 @@ else {
 
 @code{
     [Parameter]
-    public string Confirmation { get; set; }
+    public Domain.Rsvp Rsvp { get; set; }
 
     public string UserConfirmation { get; set; }
 
@@ -28,7 +28,7 @@ else {
     public string CheckMessage { get; set; } = "";
 
     private void CheckConfirmation() {
-        CheckPassed = UserConfirmation == Confirmation;
+        CheckPassed = UserConfirmation == Rsvp.ConfirmationCode;
         CheckMessage = CheckPassed
             ? "RSVP confirmed"
             : "Code does not match";
