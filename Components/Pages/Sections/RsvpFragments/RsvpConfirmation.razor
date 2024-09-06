@@ -1,0 +1,98 @@
+@using wedding_site.Domain
+
+@rendermode InteractiveServer
+
+@inject IRsvpRepo RsvpRepo
+
+<div>
+    <p>Thank you for RSVPing</p>
+    @if (Rsvp.Attending){
+        <p>We can't wait to see you in Seville!</p>
+        <p>Please let us know who will be joining you and any dietary requirements below</p>
+    }
+    else {
+        <p>Sorry you won't be able to make it. If anything changes and you can come, you can change your response here.</p>
+    }
+    <p>We will be attending: </p>
+    <InputRadioGroup Name="attending" @bind-Value="Rsvp.Attending" TValue="bool">
+        <label>
+            Yes
+            <InputRadio Name="attending" Value="true" />
+        </label>
+        <label>
+            No
+            <InputRadio Name="attending" Value="false" />
+        </label>
+    </InputRadioGroup>
+</div>
+<div>
+    <label>Attendees:</label><br>
+    @foreach (var attendee in Rsvp.Attendees) {
+        <label>Name: </label>
+        <input @bind="attendee.Name"/>
+        @if (Rsvp.Attending) {
+            <label>
+                Vegetarian
+                <input type="checkbox" @bind="attendee.FoodRequirements.Vegetarian" />
+             </label>
+            <label>
+                Vegan
+                <input type="checkbox" @bind="attendee.FoodRequirements.Vegan" />
+            </label>
+            <label>
+                Other
+                <input type="checkbox" @bind="attendee.FoodRequirements.Other" />
+            </label>
+        }
+        @if (Rsvp.Attendees.Count() > 1) {
+            <button @onclick="() => RemoveAttendee(attendee)">Remove</button>
+        }
+        <br>
+        @if (Rsvp.Attending && attendee.FoodRequirements.Other) {
+            <label>
+                @attendee.Name's other food requirements:
+                <input @bind="attendee.FoodRequirements.OtherDescription" />
+            </label>
+            <br>
+        }
+    }
+    @if (Rsvp.Attending) {
+    <button @onclick="AddAttendee">
+        Add Attendee
+    </button>
+    }
+    else {
+    <button @onclick="AddAttendee">
+        Add Person
+    </button>
+    }
+    <button @onclick="SaveRsvp">Save</button>
+
+    <p>@Message</p>
+</div>
+
+@code{
+    [Parameter]
+    public Domain.Rsvp Rsvp { get; set; }
+
+    public string Message { get; set; } = "";
+
+    private void AddAttendee() {
+        Rsvp.Attendees.Add(new Attendee());
+    }
+
+    private void RemoveAttendee(Attendee attendee){
+        Rsvp.Attendees.Remove(attendee);
+    }
+
+    private async Task SaveRsvp() {
+        await RsvpRepo.SaveRsvp(Rsvp);
+
+        Message = "Your RSVP has been saved";
+    }
+
+    protected override void OnInitialized() {
+        if (Rsvp.Attendees.Count() == 0)
+            AddAttendee();
+    }
+}

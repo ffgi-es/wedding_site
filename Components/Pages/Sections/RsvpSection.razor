@@ -1,4 +1,5 @@
 @using wedding_site.Domain
+@using wedding_site.Components.Pages.Sections.RsvpFragments
 
 @inject IRsvpRepo rsvpRepo
 @inject ILogger<RsvpSection> logger
@@ -8,10 +9,9 @@
     <TileContent>
         <h1>RSVP</h1>
 
-        <p>details to come soon</p>
         @if (rsvp != null)
         {
-            <RsvpConfirmation Rsvp=@rsvp />
+            <RsvpPassword Rsvp=@rsvp />
         }
         else
         {

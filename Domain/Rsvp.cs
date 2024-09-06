@@ -2,6 +2,7 @@ namespace wedding_site.Domain;
 
 public record Rsvp(string Id, string ConfirmationCode)
 {
+    public bool Replied { get; set; }
     public bool Attending { get; set; }
     public List<Attendee> Attendees { get; set; } = [];
 }

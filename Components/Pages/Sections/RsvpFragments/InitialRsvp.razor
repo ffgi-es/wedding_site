@@ -1,0 +1,48 @@
+@using wedding_site.Domain
+
+@rendermode InteractiveServer
+
+@inject IRsvpRepo RsvpRepo
+
+@if (Rsvp.Replied){
+    <RsvpConfirmation Rsvp=@Rsvp />
+}
+else {
+    <div>
+        <p>Thank you for responding!</p>
+        @if(!NameEntered) {
+            <p>Please enter your name below:</p>
+            <input @bind="Name" />
+            <button @onclick='EnterName'>Enter</button>
+        }
+        else {
+            <p>Will you be attending, @Name?</p>
+            <button @onclick='YesAttend'>Yes</button>
+            <button @onclick='NoAttend'>No</button>
+        }
+    </div>
+}
+
+@code{
+    [Parameter]
+    public Domain.Rsvp Rsvp { get; set; }
+
+    public string Name { get; set; } = string.Empty;
+
+    public bool NameEntered { get; set; } = false;
+
+    public void EnterName() {
+        Rsvp.Attendees = [new Attendee() { Name = Name }];
+        NameEntered = true;
+    }
+
+    public async Task YesAttend() => await Attend(true);
+
+    public async Task NoAttend() => await Attend(false);
+
+    private async Task Attend(bool attend) {
+        Rsvp.Attending = attend;
+        Rsvp.Replied = true;
+        await RsvpRepo.SaveRsvp(Rsvp);
+    }
+}
