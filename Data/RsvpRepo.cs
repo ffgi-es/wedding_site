@@ -16,9 +16,9 @@ internal class RsvpRepo : IRsvpRepo
     {
         try
         {
-            var resp = await _containter.ReadItemAsync<Rsvp>(id, new PartitionKey(id));
+            var resp = await _containter.ReadItemAsync<Entity<Rsvp>>(id, new PartitionKey(id));
 
-            return resp.Resource;
+            return resp.Resource.Payload;
         }
         catch(CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
@@ -28,6 +28,6 @@ internal class RsvpRepo : IRsvpRepo
 
     public async Task SaveRsvp(Rsvp rsvp)
     {
-        await _containter.UpsertItemAsync(rsvp.ToDataModel(), new PartitionKey(rsvp.Id));
+        await _containter.UpsertItemAsync(rsvp.ToEntity(), new PartitionKey(rsvp.Id));
     }
 }

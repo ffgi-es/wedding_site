@@ -6,12 +6,43 @@
 
 @if (CheckPassed) {
     <div>
-        <label>Name: </label>
-        <input @bind="Rsvp.Name"/><br>
-        <label>Attending: </label>
-        <input type="checkbox" @bind="Rsvp.Attending"/><br>
-        <label>Food Alergies: </label>
-        <input @bind="Rsvp.FoodAlergies" /><br>
+        <p>We will be attending: </p>
+        <InputRadioGroup Name="attending" @bind-Value="Rsvp.Attending" TValue="bool">
+            <label>
+                Yes
+                <InputRadio Name="attending" Value="true" />
+            </label>
+            <label>
+                No
+                <InputRadio Name="attending" Value="false" />
+            </label>
+        </InputRadioGroup>
+        <label>Attendees:</label><br>
+        @foreach (var attendee in Rsvp.Attendees) {
+            <label>Name: </label>
+            <input @bind="attendee.Name"/>
+            <button @onclick="() => RemoveAttendee(attendee)">Remove</button><br>
+            @if (Rsvp.Attending) {
+                <label>Vegetarian</label><label>Vegan</label><label>Other</label><br>
+                <input type="checkbox" @bind="attendee.FoodRequirements.Vegetarian" />
+                <input type="checkbox" @bind="attendee.FoodRequirements.Vegan" />   
+                <input type="checkbox" @bind="attendee.FoodRequirements.Other" /><br>
+                @if (attendee.FoodRequirements.Other) {
+                    <label>Other food requirements:</label><br>
+                    <input @bind="attendee.FoodRequirements.OtherDescription"/><br>
+                }
+            }
+        }
+        @if (Rsvp.Attending) {
+        <button @onclick="AddAttendee">
+            Add Attendee
+        </button>
+        }
+        else {
+        <button @onclick="AddAttendee">
+            Add Person
+        </button>
+        }
         <button @onclick="SaveRsvp">Save</button>
     </div>
 }
@@ -42,9 +73,22 @@ else {
             : "Code does not match";
     }
 
+    private void AddAttendee() {
+        Rsvp.Attendees.Add(new Attendee());
+    }
+
+    private void RemoveAttendee(Attendee attendee){
+        Rsvp.Attendees.Remove(attendee);
+    }
+
     private async Task SaveRsvp() {
         await RsvpRepo.SaveRsvp(Rsvp);
 
         Message = "Your RSVP has been saved";
+    }
+
+    protected override void OnInitialized() {
+        if (Rsvp.Attendees.Count() == 0)
+            AddAttendee();
     }
 }
