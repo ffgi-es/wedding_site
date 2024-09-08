@@ -45,6 +45,19 @@
     padding: 1em;
 }
 
+label:has(input[type=radio]) {
+    border: 2px solid rgba(0,0,0,0.3);
+    border-radius: 6px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: rgba(255,255,255,0.1);
+}
+
+label:has(input[type=radio]:checked) {
+    border: 2px solid rgba(255,255,255, 0.5);
+    background-color: rgba(255,255,255, 0.3);
+}
+
 label:has(input[type=checkbox]) {
     border: 2px solid rgba(0,0,0,0.3);
     border-radius: 6px;
