@@ -5,7 +5,6 @@
 @inject IRsvpRepo RsvpRepo
 
 <div>
-    <p>Thank you for RSVPing</p>
     @if (Rsvp.Attending){
         <p>We can't wait to see you in Seville!</p>
         <p>Please let us know who will be joining you and any dietary requirements below</p>
@@ -13,36 +12,34 @@
     else {
         <p>Sorry you won't be able to make it. If anything changes and you can come, you can change your response here.</p>
     }
-    <p>We will be attending: </p>
-    <InputRadioGroup Name="attending" @bind-Value="Rsvp.Attending" TValue="bool">
-        <label>
-            Yes
-            <InputRadio Name="attending" Value="true" />
-        </label>
-        <label>
-            No
-            <InputRadio Name="attending" Value="false" />
-        </label>
-    </InputRadioGroup>
+    <p>
+        We will be attending:
+        <InputRadioGroup Name="attending" @bind-Value="Rsvp.Attending" TValue="bool">
+            <label>
+                Yes
+                <InputRadio Name="attending" Value="true" />
+            </label>
+            <label>
+                No
+                <InputRadio Name="attending" Value="false" />
+            </label>
+        </InputRadioGroup>
+    </p>
 </div>
-<div>
-    <label>Attendees:</label><br>
+<div class='attendees'>
+    <p>Attendees:</p>
     @foreach (var attendee in Rsvp.Attendees) {
         <label>Name: </label>
-        <input @bind="attendee.Name"/>
+        <input type="text" @bind="attendee.Name"/>
         @if (Rsvp.Attending) {
-            <label>
-                Vegetarian
-                <input type="checkbox" @bind="attendee.FoodRequirements.Vegetarian" />
-             </label>
-            <label>
-                Vegan
-                <input type="checkbox" @bind="attendee.FoodRequirements.Vegan" />
-            </label>
-            <label>
-                Other
-                <input type="checkbox" @bind="attendee.FoodRequirements.Other" />
-            </label>
+            <label for="vegetarian-@attendee.Name">Vegetarian
+            <input class="dietary-check" id="vegetarian-@attendee.Name" type="checkbox" @bind="attendee.FoodRequirements.Vegetarian" /></label>
+            <label>Vegan
+            <input class="dietary-check" id="vegan" type="checkbox" @bind="attendee.FoodRequirements.Vegan" /></label>
+            <label>Coeliac
+            <input class="dietary-check" id="coeliac" type="checkbox" @bind="attendee.FoodRequirements.Coeliac" /></label>
+            <label>Other
+            <input class="dietary-check" id="other" type="checkbox" @bind="attendee.FoodRequirements.Other" /></label>
         }
         @if (Rsvp.Attendees.Count() > 1) {
             <button @onclick="() => RemoveAttendee(attendee)">Remove</button>
@@ -51,7 +48,7 @@
         @if (Rsvp.Attending && attendee.FoodRequirements.Other) {
             <label>
                 @attendee.Name's other food requirements:
-                <input @bind="attendee.FoodRequirements.OtherDescription" />
+                <input type="text" @bind="attendee.FoodRequirements.OtherDescription" />
             </label>
             <br>
         }
@@ -66,8 +63,9 @@
         Add Person
     </button>
     }
+</div>
+<div>
     <button @onclick="SaveRsvp">Save</button>
-
     <p>@Message</p>
 </div>
 
