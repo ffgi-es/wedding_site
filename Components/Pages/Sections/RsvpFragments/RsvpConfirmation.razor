@@ -31,28 +31,42 @@
     @foreach (var attendee in Rsvp.Attendees) {
         <div class="attendee">
             <div class="attendee-info">
-                <label>Name: </label>
-                <input type="text" class="attendee-name" @bind="attendee.Name" />
-                @if (Rsvp.Attending)
-                {
-                    <label for="vegetarian-@attendee.Name">Vegetarian
-                        <input class="dietary-check" id="vegetarian-@attendee.Name" type="checkbox"
-                            @bind="attendee.FoodRequirements.Vegetarian" /></label>
-                    <label>Vegan
-                        <input class="dietary-check" id="vegan" type="checkbox"
-                            @bind="attendee.FoodRequirements.Vegan" /></label>
-                    <label>Coeliac
-                        <input class="dietary-check" id="coeliac" type="checkbox"
-                            @bind="attendee.FoodRequirements.Coeliac" /></label>
-                    <label>Other
-                <input class="dietary-check" id="other" type="checkbox"
-                    @bind="attendee.FoodRequirements.Other" /></label>
-                }
+                <div class="name-and-switches">
+                    <div class="attendee-name">
+                        <label>Name: </label>
+                        <input type="text" @bind="attendee.Name" />
+                    </div>
+                    <div class="info-switches">
+                    @if (Rsvp.Attending)
+                    {
+                        <label>Child
+                            <input type="checkbox" @bind="attendee.Child" />
+                        </label>
+                        <label for="vegetarian-@attendee.Name">Vegetarian
+                            <input class="dietary-check" id="vegetarian-@attendee.Name" type="checkbox"
+                                @bind="attendee.FoodRequirements.Vegetarian" /></label>
+                        <label>Vegan
+                            <input class="dietary-check" id="vegan" type="checkbox"
+                                @bind="attendee.FoodRequirements.Vegan" /></label>
+                        <label>Coeliac
+                            <input class="dietary-check" id="coeliac" type="checkbox"
+                                @bind="attendee.FoodRequirements.Coeliac" /></label>
+                        <label>Other
+                            <input class="dietary-check" id="other" type="checkbox"
+                                @bind="attendee.FoodRequirements.Other" /></label>
+                    }
+                    </div>
+                </div>
                 <br>
+                @if (Rsvp.Attending && attendee.Child){
+                    <label>Age:
+                        <input type="number" @bind="attendee.Age" />
+                    </label>
+                }
                 @if (Rsvp.Attending && attendee.FoodRequirements.Other)
                 {
                     <label>
-                        @attendee.Name's other food requirements:
+                        Other:
                         <input type="text" @bind="attendee.FoodRequirements.OtherDescription" />
                     </label>
                     <br>
