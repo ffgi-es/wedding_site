@@ -26,32 +26,45 @@
         </InputRadioGroup>
     </p>
 </div>
+<p>Attendees:</p>
 <div class='attendees'>
-    <p>Attendees:</p>
     @foreach (var attendee in Rsvp.Attendees) {
-        <label>Name: </label>
-        <input type="text" @bind="attendee.Name"/>
-        @if (Rsvp.Attending) {
-            <label for="vegetarian-@attendee.Name">Vegetarian
-            <input class="dietary-check" id="vegetarian-@attendee.Name" type="checkbox" @bind="attendee.FoodRequirements.Vegetarian" /></label>
-            <label>Vegan
-            <input class="dietary-check" id="vegan" type="checkbox" @bind="attendee.FoodRequirements.Vegan" /></label>
-            <label>Coeliac
-            <input class="dietary-check" id="coeliac" type="checkbox" @bind="attendee.FoodRequirements.Coeliac" /></label>
-            <label>Other
-            <input class="dietary-check" id="other" type="checkbox" @bind="attendee.FoodRequirements.Other" /></label>
-        }
-        @if (Rsvp.Attendees.Count() > 1) {
-            <button @onclick="() => RemoveAttendee(attendee)">Remove</button>
-        }
-        <br>
-        @if (Rsvp.Attending && attendee.FoodRequirements.Other) {
-            <label>
-                @attendee.Name's other food requirements:
-                <input type="text" @bind="attendee.FoodRequirements.OtherDescription" />
-            </label>
-            <br>
-        }
+        <div class="attendee">
+            <div class="attendee-info">
+                <label>Name: </label>
+                <input type="text" class="attendee-name" @bind="attendee.Name" />
+                @if (Rsvp.Attending)
+                {
+                    <label for="vegetarian-@attendee.Name">Vegetarian
+                        <input class="dietary-check" id="vegetarian-@attendee.Name" type="checkbox"
+                            @bind="attendee.FoodRequirements.Vegetarian" /></label>
+                    <label>Vegan
+                        <input class="dietary-check" id="vegan" type="checkbox"
+                            @bind="attendee.FoodRequirements.Vegan" /></label>
+                    <label>Coeliac
+                        <input class="dietary-check" id="coeliac" type="checkbox"
+                            @bind="attendee.FoodRequirements.Coeliac" /></label>
+                    <label>Other
+                <input class="dietary-check" id="other" type="checkbox"
+                    @bind="attendee.FoodRequirements.Other" /></label>
+                }
+                <br>
+                @if (Rsvp.Attending && attendee.FoodRequirements.Other)
+                {
+                    <label>
+                        @attendee.Name's other food requirements:
+                        <input type="text" @bind="attendee.FoodRequirements.OtherDescription" />
+                    </label>
+                    <br>
+                }
+            </div>
+            <div class="remove-attendee">
+                @if (Rsvp.Attendees.Count() > 1)
+                {
+                    <button @onclick="() => RemoveAttendee(attendee)">X</button>
+                }
+            </div>
+        </div>
     }
     @if (Rsvp.Attending) {
     <button @onclick="AddAttendee">

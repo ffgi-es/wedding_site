@@ -3,6 +3,26 @@
     max-height: 50vh;
 }
 
+.attendee {
+    position: relative;
+}
+
+.attendee-info {
+    display: inline-block;
+    /*width: 80%;*/
+    border-bottom: 2px solid rgba(255,255,255,0.7);
+    padding-bottom: 1em;
+    padding-top:1em;
+}
+
+.remove-attendee {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: inline-block;
+    padding: 1em;
+}
+
 label:has(input[type=checkbox]) {
     border: 2px solid rgba(0,0,0,0.3);
     border-radius: 6px;
