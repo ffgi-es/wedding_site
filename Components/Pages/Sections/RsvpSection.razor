@@ -16,8 +16,8 @@
         else
         {
             <label>RSVP: </label>
-            <input @bind="Id" />
-            <button @onclick="UpdateRsvp">Submit</button>
+            <input type="text" @bind="Id" />
+            <button class="user" @onclick="UpdateRsvp">Submit</button>
             <p>@Message</p>
         }
     </TileContent>
