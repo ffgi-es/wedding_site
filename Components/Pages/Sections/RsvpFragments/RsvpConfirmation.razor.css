@@ -79,3 +79,9 @@ button {
     border-radius: 6px;
     background-color: rgba(200,200,200,0.8);
 }
+
+@media (max-width: 800px) {
+    .name-and-switches {
+        flex-direction: column;
+    }
+}
