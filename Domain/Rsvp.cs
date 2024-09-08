@@ -11,6 +11,8 @@ public class Attendee
 {
     public string Name { get; set; } = string.Empty;
     public FoodRequirements FoodRequirements { get; set; } = new();
+    public bool Child { get; set; }
+    public decimal Age { get; set; }
 }
 
 public class FoodRequirements
