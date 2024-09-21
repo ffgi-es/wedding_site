@@ -1,0 +1,20 @@
+<div id="@TileId" class="tile">
+    <div class="scrolling-background" style="background-image:url(@BackgroundUrl)">
+    </div>
+    <div class="info">
+        <div class="info-content">
+            @TileContent
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required string TileId { get; set; }
+
+    [Parameter]
+    public required string BackgroundUrl { get; set; } = "https://i.imgur.com/YtGvW43.jpeg";
+
+    [Parameter]
+    public required RenderFragment TileContent { get; set; }
+}

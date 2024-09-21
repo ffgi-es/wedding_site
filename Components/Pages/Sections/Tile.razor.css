@@ -1,5 +1,29 @@
 .tile {
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 50% 50%
+    background-position: 50% 50%;
+
+    width: 100%;
+    margin: 0;
+    height: 100vh;
+    scroll-snap-align: start;
+}
+
+.info {
+    width: 70%;
+    height: 100%;
+    margin-left: 15%;
+    margin-right: 15%;
+    background: rgba(10, 10, 10, .4);
+}
+
+.info-content {
+    position: relative;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    top: 50%;
+    transform: translate(0, -50%);
+    text-align: center;
+    color: white;
 }
