@@ -1,5 +1,8 @@
 <div id="@TileId" class="tile">
-    <div class="scrolling-background" style="background-image:url(@BackgroundUrl)">
+    <div class="scrolling-background">
+        @foreach (var backgroundUrl in BackgroundUrls) {
+            <img src="@backgroundUrl">
+        }
     </div>
     <div class="info">
         <div class="info-content">
@@ -13,7 +16,7 @@
     public required string TileId { get; set; }
 
     [Parameter]
-    public required string BackgroundUrl { get; set; } = "https://i.imgur.com/YtGvW43.jpeg";
+    public required string[] BackgroundUrls { get; set; } = ["https://i.imgur.com/YtGvW43.jpeg"];
 
     [Parameter]
     public required RenderFragment TileContent { get; set; }
