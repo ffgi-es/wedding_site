@@ -9,6 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="qrcoder" Version="1.6.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.42.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\wedding_site\wedding_site.csproj" />
   </ItemGroup>
 
 </Project>

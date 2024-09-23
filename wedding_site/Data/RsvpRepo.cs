@@ -3,7 +3,7 @@ using wedding_site.Domain;
 
 namespace wedding_site.Data;
 
-internal class RsvpRepo : IRsvpRepo
+public class RsvpRepo : IRsvpRepo
 {
     private Container _containter;
 
