@@ -1,15 +1,15 @@
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine as restore
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS restore
 
 WORKDIR src
-COPY wedding_site.csproj wedding_site.csproj
+COPY wedding_site/wedding_site.csproj wedding_site.csproj
 RUN dotnet restore wedding_site.csproj
 
-FROM restore as build
+FROM restore AS build
 
-COPY ["./", "./"]
+COPY ["wedding_site/", "./"]
 RUN dotnet build -c Release --no-restore wedding_site.csproj
 
-FROM build as publish
+FROM build AS publish
 
 RUN dotnet publish wedding_site.csproj -c Release -o "/app" --no-build --no-self-contained
 
