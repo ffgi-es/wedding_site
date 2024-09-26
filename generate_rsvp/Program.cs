@@ -18,4 +18,4 @@ var textAdder = new ImageTextAdder(18);
 textAdder.AddRsvpText(image, rsvp);
 textAdder.AddPasscodeText(image, passcode);
 
-image.SaveAsPng("./test.png");
+image.SaveAsPng("./qrCodes/test.png");
