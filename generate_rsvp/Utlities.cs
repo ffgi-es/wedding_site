@@ -14,6 +14,18 @@ public class Utilities
             Random.Shared.Next(1_000, 10_000).ToString()
         );
 
+    public static void PrettyPrintRsvps(IEnumerable<(string Rsvp, string Passcode)> rsvps, int perLine = 3)
+    {
+        int i = 0;
+        foreach(var rsvp in rsvps.Select(r => r.Rsvp))
+        {
+            i++;
+            if (i % perLine == 0) Console.WriteLine(rsvp);
+            else Console.Write($"{rsvp} ");
+        }
+        if (i % perLine != 0) Console.WriteLine();
+    }
+
     public static async Task CreateRsvpsInCosmos(IEnumerable<(string Rsvp, string Passcode)> rsvps)
     {
         var cosmosClient = new CosmosClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTIONSTRING"));

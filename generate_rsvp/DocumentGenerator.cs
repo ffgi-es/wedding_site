@@ -6,9 +6,9 @@ namespace wedding_site.RsvpGeneration;
 
 public class DocumentGenerator
 {
-    public void GenerateRsvpsPdf((string Rsvp, string Passcode)[] rsvps)
+    public string GenerateRsvpsPdf((string Rsvp, string Passcode)[] rsvps)
     {
-        var date = DateTime.UtcNow.ToString("u");
+        var date = DateTime.Now.ToString("u");
         var filename = $"rsvps-{date}.pdf";
 
         Document.Create(container =>
@@ -39,5 +39,6 @@ public class DocumentGenerator
             });
         })
         .GeneratePdf(filename);
+        return filename;
     }
 }
