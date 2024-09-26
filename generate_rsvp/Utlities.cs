@@ -22,7 +22,7 @@ public class Utilities
 
         foreach (var (rsvp, passcode) in rsvps)
         {
-            await rsvpRepo.SaveRsvp(new Rsvp(rsvp, passcode));
+            await rsvpRepo.CreateRsvp(new Rsvp(rsvp, passcode));
         }
     }
 }

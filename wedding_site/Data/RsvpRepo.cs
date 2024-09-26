@@ -30,4 +30,9 @@ public class RsvpRepo : IRsvpRepo
     {
         await _containter.UpsertItemAsync(rsvp.ToEntity(), new PartitionKey(rsvp.Id));
     }
+
+    public async Task CreateRsvp(Rsvp rsvp)
+    {
+        await _containter.CreateItemAsync(rsvp.ToEntity(), new PartitionKey(rsvp.Id));
+    }
 }

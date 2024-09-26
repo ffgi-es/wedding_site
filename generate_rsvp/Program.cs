@@ -1,11 +1,11 @@
 ﻿using QuestPDF.Infrastructure;
 using wedding_site.RsvpGeneration;
 
-var rsvps = Enumerable.Range(1, 144)
+var rsvps = Enumerable.Range(1, 36)
     .Select(_ => Utilities.GenerateRsvpCredentials())
     .ToArray();
 
-//await Utilities.CreateRsvpsInCosmos(rsvps);
+await Utilities.CreateRsvpsInCosmos(rsvps);
 
 var qrGenerator = new QrCodeGenerator(12);
 
