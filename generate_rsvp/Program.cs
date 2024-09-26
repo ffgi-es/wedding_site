@@ -1,34 +1,21 @@
-﻿using Microsoft.Azure.Cosmos;
-using QRCoder;
-using SixLabors.ImageSharp;
-using wedding_site.Data;
-using wedding_site.Domain;
+﻿using SixLabors.ImageSharp;
+using wedding_site.RsvpGeneration;
 
-var rsvp = Random.Shared.Next(100_000, 1_000_000).ToString();
+var (rsvp, passcode) = Utilities.GenerateRsvpCredentials();
 
-var passcode = Random.Shared.Next(1_000, 10_000).ToString();
+//await Utilities.CreateRsvpInCosmos(rsvp, passcode);
 
-var cosmosClient = new CosmosClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTIONSTRING"));
+var url = $"https://emilie-alastair-wedding.azurewebsites.net/RSVP/{rsvp}";
 
-var rsvpRepo = new RsvpRepo(cosmosClient);
+var qrBitmapBytes = Utilities.GenerateQrCodeForUrl(url, 8);
 
-//await rsvpRepo.SaveRsvp(new Rsvp(rsvp, passcode));
-
-var data = new PayloadGenerator.Url($"https://emilie-alastair-wedding.azurewebsites.net/RSVP/{rsvp}").ToString();
-
-using var qrCodeGenerator = new QRCodeGenerator();
-using var qrCodeData = qrCodeGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
-using var ascii = new AsciiQRCode(qrCodeData);
-
-var output = ascii.GetGraphicSmall();
-
-Console.WriteLine(output);
-Console.WriteLine($"passcode: {passcode}");
-
-using var qrCode = new BitmapByteQRCode(qrCodeData);
-var bitmapOutput = qrCode.GetGraphic(4);
-using var stream = new MemoryStream(bitmapOutput); 
+using var stream = new MemoryStream(qrBitmapBytes); 
 
 using var image = Image.Load(stream);
+
+var textAdder = new ImageTextAdder(18);
+
+textAdder.AddRsvpText(image, rsvp);
+textAdder.AddPasscodeText(image, passcode);
 
 image.SaveAsPng("./test.png");

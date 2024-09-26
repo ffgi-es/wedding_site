@@ -10,7 +10,9 @@
   <ItemGroup>
     <PackageReference Include="qrcoder" Version="1.6.0" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.42.0" />
+    <PackageReference Include="sixlabors.fonts" Version="2.0.4" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+    <PackageReference Include="sixlabors.imagesharp.drawing" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
