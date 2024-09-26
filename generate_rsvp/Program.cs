@@ -1,23 +1,46 @@
-﻿using SixLabors.ImageSharp;
+﻿using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 using wedding_site.RsvpGeneration;
 
 var (rsvp, passcode) = Utilities.GenerateRsvpCredentials();
 
 //await Utilities.CreateRsvpInCosmos(rsvp, passcode);
 
-var url = $"https://emilie-alastair-wedding.azurewebsites.net/RSVP/{rsvp}";
+var qrGenerator = new QrCodeGenerator(12);
 
-var size = 12;
+qrGenerator.GenerateQrCodes([(rsvp, passcode)]);
 
-var qrBitmapBytes = Utilities.GenerateQrCodeForUrl(url, size);
-
-using var stream = new MemoryStream(qrBitmapBytes); 
-
-using var image = Image.Load(stream);
-
-var textAdder = new ImageTextAdder(2*size);
-
-textAdder.AddRsvpText(image, rsvp);
-textAdder.AddPasscodeText(image, passcode);
-
-image.SaveAsPng("./qrCodes/test.png");
+QuestPDF.Settings.License = LicenseType.Community;        
+Document.Create(container =>
+{
+    container.Page(page =>
+    {
+        page.Size(PageSizes.A4);
+        page.Content()
+            .Column(c =>
+            {
+                c.Item().Row(r => {
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                });
+                c.Item().Row(r => {
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                });
+                c.Item().Row(r => {
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                });
+                c.Item().Row(r => {
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
+                });
+            });
+    });
+})
+.GeneratePdf("test.pdf");

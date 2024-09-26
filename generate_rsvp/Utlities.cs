@@ -1,5 +1,6 @@
 using Microsoft.Azure.Cosmos;
 using QRCoder;
+using QuestPDF.Infrastructure;
 using wedding_site.Data;
 using wedding_site.Domain;
 
@@ -7,9 +8,11 @@ namespace wedding_site.RsvpGeneration;
 
 public class Utilities
 {
+    private static readonly string _chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+
     public static (string Rsvp, string Passcode) GenerateRsvpCredentials() =>
         (
-            Random.Shared.Next(100_000, 1_000_000).ToString(),
+            string.Join("", Enumerable.Range(1,8).Select(_ => _chars[Random.Shared.Next(_chars.Length)])),
             Random.Shared.Next(1_000, 10_000).ToString()
         );
 
@@ -20,16 +23,5 @@ public class Utilities
         var rsvpRepo = new RsvpRepo(cosmosClient);
 
         await rsvpRepo.SaveRsvp(new Rsvp(rsvp, passcode));
-    }
-
-    public static byte[] GenerateQrCodeForUrl(string url, int pixels)
-    {
-        var data = new PayloadGenerator.Url(url).ToString();
-
-        using var qrCodeGenerator = new QRCodeGenerator();
-        using var qrCodeData = qrCodeGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
-        using var qrCode = new BitmapByteQRCode(qrCodeData);
-
-        return qrCode.GetGraphic(pixels);
     }
 }
