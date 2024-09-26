@@ -29,6 +29,7 @@ public class Utilities
     public static async Task CreateRsvpsInCosmos(IEnumerable<(string Rsvp, string Passcode)> rsvps)
     {
         var cosmosClient = new CosmosClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTIONSTRING"));
+        Console.WriteLine("Connected to DB");
 
         var rsvpRepo = new RsvpRepo(cosmosClient);
 
