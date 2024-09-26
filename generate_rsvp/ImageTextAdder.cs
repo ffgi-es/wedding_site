@@ -8,17 +8,19 @@ namespace wedding_site.RsvpGeneration;
 public class ImageTextAdder {
     private readonly FontCollection collection = new();
     private readonly FontFamily family;
-    private readonly Font font;
+    private readonly Font _font;
+    private float _size;
 
     public ImageTextAdder(float size) {
+        _size = size;
         family = collection.Add("/usr/share/fonts/TTF/DejaVuSans.ttf");
-        font = family.CreateFont(size, FontStyle.Regular);
+        _font = family.CreateFont(size, FontStyle.Regular);
     }
 
     public void AddRsvpText(Image image, string rsvp) {
         var urlText = $"RSVP: {rsvp}";
-        var urlOptions = new RichTextOptions(font) {
-            Origin = new PointF(image.Width/2, 18),
+        var urlOptions = new RichTextOptions(_font) {
+            Origin = new PointF(image.Width/2, _size),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };
@@ -28,8 +30,8 @@ public class ImageTextAdder {
 
     public void AddPasscodeText(Image image, string passcode) {
         var urlText = $"Passcode: {passcode}";
-        var urlOptions = new RichTextOptions(font) {
-            Origin = new PointF(image.Width/2, image.Height-18),
+        var urlOptions = new RichTextOptions(_font) {
+            Origin = new PointF(image.Width/2, image.Height-_size),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };

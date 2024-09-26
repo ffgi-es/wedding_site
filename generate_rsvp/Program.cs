@@ -7,13 +7,15 @@ var (rsvp, passcode) = Utilities.GenerateRsvpCredentials();
 
 var url = $"https://emilie-alastair-wedding.azurewebsites.net/RSVP/{rsvp}";
 
-var qrBitmapBytes = Utilities.GenerateQrCodeForUrl(url, 8);
+var size = 12;
+
+var qrBitmapBytes = Utilities.GenerateQrCodeForUrl(url, size);
 
 using var stream = new MemoryStream(qrBitmapBytes); 
 
 using var image = Image.Load(stream);
 
-var textAdder = new ImageTextAdder(18);
+var textAdder = new ImageTextAdder(2*size);
 
 textAdder.AddRsvpText(image, rsvp);
 textAdder.AddPasscodeText(image, passcode);
