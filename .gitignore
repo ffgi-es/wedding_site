@@ -5,7 +5,7 @@
 
 # generate QR codes
 qrCodes/
-rsvps.pdf
+rsvps*.pdf
 
 # dotenv files
 .env

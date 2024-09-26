@@ -8,6 +8,9 @@ public class DocumentGenerator
 {
     public void GenerateRsvpsPdf((string Rsvp, string Passcode)[] rsvps)
     {
+        var date = DateTime.UtcNow.ToString("u");
+        var filename = $"rsvps-{date}.pdf";
+
         Document.Create(container =>
         {
             container.Page(page =>
@@ -35,6 +38,6 @@ public class DocumentGenerator
                     });
             });
         })
-        .GeneratePdf("rsvps.pdf");
+        .GeneratePdf(filename);
     }
 }
