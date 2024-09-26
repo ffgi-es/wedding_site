@@ -2,6 +2,7 @@ using QRCoder;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
 namespace wedding_site.RsvpGeneration;
@@ -38,6 +39,13 @@ public class QrCodeGenerator
 
             image.SaveAsPng($"./qrCodes/{rsvp}.png");
         }
+    }
+
+    public static byte[] BlankImage(int size) {
+        using var image = new Image<Rgba64>(size, size);
+        using var ms = new MemoryStream();
+        image.SaveAsPng(ms);
+        return ms.ToArray();
     }
 
     private static byte[] GenerateQrCodeForUrl(string url, int pixels)

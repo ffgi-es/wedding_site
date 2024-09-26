@@ -1,6 +1,4 @@
 using Microsoft.Azure.Cosmos;
-using QRCoder;
-using QuestPDF.Infrastructure;
 using wedding_site.Data;
 using wedding_site.Domain;
 
@@ -16,12 +14,15 @@ public class Utilities
             Random.Shared.Next(1_000, 10_000).ToString()
         );
 
-    public static async Task CreateRsvpInCosmos(string rsvp, string passcode)
+    public static async Task CreateRsvpsInCosmos(IEnumerable<(string Rsvp, string Passcode)> rsvps)
     {
         var cosmosClient = new CosmosClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTIONSTRING"));
 
         var rsvpRepo = new RsvpRepo(cosmosClient);
 
-        await rsvpRepo.SaveRsvp(new Rsvp(rsvp, passcode));
+        foreach (var (rsvp, passcode) in rsvps)
+        {
+            await rsvpRepo.SaveRsvp(new Rsvp(rsvp, passcode));
+        }
     }
 }

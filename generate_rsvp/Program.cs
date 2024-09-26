@@ -1,46 +1,16 @@
-﻿using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
+﻿using QuestPDF.Infrastructure;
 using wedding_site.RsvpGeneration;
 
-var (rsvp, passcode) = Utilities.GenerateRsvpCredentials();
+var rsvps = Enumerable.Range(1, 144)
+    .Select(_ => Utilities.GenerateRsvpCredentials())
+    .ToArray();
 
-//await Utilities.CreateRsvpInCosmos(rsvp, passcode);
+//await Utilities.CreateRsvpsInCosmos(rsvps);
 
 var qrGenerator = new QrCodeGenerator(12);
 
-qrGenerator.GenerateQrCodes([(rsvp, passcode)]);
+qrGenerator.GenerateQrCodes(rsvps);
 
 QuestPDF.Settings.License = LicenseType.Community;        
-Document.Create(container =>
-{
-    container.Page(page =>
-    {
-        page.Size(PageSizes.A4);
-        page.Content()
-            .Column(c =>
-            {
-                c.Item().Row(r => {
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                });
-                c.Item().Row(r => {
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                });
-                c.Item().Row(r => {
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                });
-                c.Item().Row(r => {
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                    r.RelativeItem().Image($"qrCodes/{rsvp}.png");
-                });
-            });
-    });
-})
-.GeneratePdf("test.pdf");
+var documentGenerator = new DocumentGenerator();
+documentGenerator.GenerateRsvpsPdf(rsvps);
