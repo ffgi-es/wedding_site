@@ -33,9 +33,30 @@ public class Utilities
 
         var rsvpRepo = new RsvpRepo(cosmosClient);
 
+        Console.Write("Creating rsvps in DB");
         foreach (var (rsvp, passcode) in rsvps)
         {
-            await rsvpRepo.CreateRsvp(new Rsvp(rsvp, passcode));
+            for (int i=0; i < 3; i++)
+            {
+                try
+                {
+                    await rsvpRepo.CreateRsvp(new Rsvp(rsvp, passcode));
+                    Console.Write(".");
+                    break;
+                }
+                catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.RequestTimeout)
+                {
+                    Console.Write("-");
+                    if (i > 1) throw;
+                    await Task.Delay(1000);
+                }
+                catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    Console.Write(".");
+                    break;
+                }
+            }
         }
+        Console.WriteLine();
     }
 }

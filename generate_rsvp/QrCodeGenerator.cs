@@ -34,8 +34,8 @@ public class QrCodeGenerator
 
             using var image = Image.Load(stream);
 
-            AddRsvpText(image, rsvp);
-            AddPasscodeText(image, passcode);
+            //AddRsvpText(image, rsvp);
+            //AddPasscodeText(image, passcode);
 
             image.SaveAsPng($"./qrCodes/{rsvp}.png");
         }

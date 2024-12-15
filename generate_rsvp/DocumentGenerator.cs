@@ -28,7 +28,14 @@ public class DocumentGenerator
                                 for (var x=0; x<3; x++)
                                 {
                                     if (i < rsvps.Length)
+                                    {
                                         r.RelativeItem().Image($"qrCodes/{rsvps[i].Rsvp}.png");
+                                        r.RelativeItem().AlignMiddle().Column(c =>
+                                        {
+                                            c.Item().AlignMiddle().Text($"RSVP: {rsvps[i].Rsvp}");
+                                            c.Item().AlignMiddle().Text($"Passcode: {rsvps[i].Passcode}");
+                                        });
+                                    }
                                     else
                                         r.RelativeItem().Image(blankImage);
                                     i++;
